@@ -36,27 +36,25 @@
         <div class="event-container">
             <div class="event-wrapper" ng-repeat="event in eventList">
                 <div class="event-wrapper-inner">
-                    <span ng-model="showHide" ng-hide="showHide" ng-click="toggleShowHide(showHide)">
+                    <span ng-hide="showHide[event.id]" ng-click="toggleShowHide(event.id)">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </span>
-                    <span ng-model="showHide" ng-show="showHide" ng-click="toggleShowHide(showHide)">
+                    <span ng-show="showHide[event.id]" ng-click="toggleShowHide(event.id)">
                         <i class="fa-solid fa-x"></i>
                     </span>
 
-                    <p ng-hide="showHide">{{ event.title }}</p>
-                    <input type="text" ng-show="showHide" ng-model="event.title" value="{{ event.title }}">
+                    <p ng-hide="showHide[event.id]">{{ event.title }}</p>
+                    <input type="text" ng-show="showHide[event.id]" ng-model="event.title" value="{{ event.title }}">
 
-                    <p ng-hide="showHide">{{ event.local }}</p>
-                    <input type="text" ng-show="showHide" ng-model="event.local" value="{{ event.local }}">
+                    <p ng-hide="showHide[event.id]">{{ event.local }}</p>
+                    <input type="text" ng-show="showHide[event.id]" ng-model="event.local" value="{{ event.local }}">
 
-                    <p ng-hide="showHide">{{ event.dateStart | date:"dd/MM/yyyy - HH:mm" }}</p>
-                    <input type="datetime-local" ng-show="showHide" ng-model="event.dateStart"
+                    <p ng-hide="showHide[event.id]">{{ event.dateStart | date:"dd/MM/yyyy - HH:mm" }}</p>
+                    <input type="datetime-local" ng-show="showHide[event.id]" ng-model="event.dateStart"
                         value="{{ event.dateStart }}">
 
-                    <button type="button" ng-model="showHide" ng-show="showHide" ng-click="updateEvent(event.id)"
-                        class="save-btn">
-                        Salvar
-                    </button>
+                    <button type="button" ng-show="showHide[event.id]" ng-click="updateEvent(event.id)"
+                        class="save-btn">Salvar</button>
                 </div>
                 <div class="event-wrapper-inner">
                     <button ng-click="deleteEvent(event.id)" type="button" class="trash-btn">

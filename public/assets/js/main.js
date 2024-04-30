@@ -6,12 +6,12 @@ app.controller('AgendaController', ($scope, $http) => {
     $scope.local = ''
     $scope.dateStart = ''
     $scope.eventList = ''
-    $scope.showHide = false
+    $scope.showHide = {};
 
-    $scope.toggleShowHide = (showHide) => {
-        console.log(showHide)
-        return $scope.showHide = !$scope.showHide ? true : false;
-    }
+    $scope.toggleShowHide = (eventId) => {
+        console.log($scope.showHide)
+        $scope.showHide[eventId] = !$scope.showHide[eventId];
+    };
 
     $scope.cadastrar = () => {
         if (!$scope.title) {
@@ -34,7 +34,7 @@ app.controller('AgendaController', ($scope, $http) => {
     $scope.updateEvent = (id) => {
         const event = $scope.eventList.find(event => event.id === id)
 
-        $scope.toggleShowHide(true)
+        $scope.toggleShowHide(id)
 
         $http.patch('http://localhost:3333/api/events/' + id,
             event
