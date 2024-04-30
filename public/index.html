@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" ng-app="agenda-eventos">
 
 <head>
     <meta charset="UTF-8">
@@ -9,27 +9,65 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./assets/css/style.css">
     <title>Agenda de Eventos</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 </head>
 
-<body>
+<body ng-controller="AgendaController">
     <div class="container">
-        <h1>Agenda de Eventos</h1>
+        <h1 ng-bind="titleh1"></h1>
+        <!-- <p>Nothing here <span ng-bind="saudacao"></span> -->
+        </p>
         <div class="input-wrapper">
             <div>
                 <label for="title-input">Título: </label>
-                <input type="text" id="title-input" placeholder="Nome do evento" />
+                <input type="text" id="title-input" ng-model="title" placeholder="Nome do evento" />
             </div>
             <div>
                 <label for="local-input">Localização: </label>
-                <input type="text" id="local-input" placeholder="Localização" />
+                <input type="text" id="local-input" ng-model="local" placeholder="Localização" />
             </div>
             <div>
                 <label for="date-start-input">Data de Início: </label>
-                <input type="datetime-local" id="date-start-input" placeholder="Data/hora de início" />
+                <input type="datetime-local" id="date-start-input" ng-model="dateStart"
+                    placeholder="Data/hora de início" />
             </div>
-            <button type="button" id="register-btn">Cadastrar</button>
+            <button type="button" id="register-btn" ng-click="cadastrar()">Cadastrar</button>
         </div>
-        <div class="event-container"></div>
+        <div class="event-container">
+            <div class="event-wrapper" ng-repeat="event in eventList">
+                <div class="event-wrapper-inner">
+                    <span ng-model="showHide" ng-hide="showHide" ng-click="toggleShowHide(showHide)">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </span>
+                    <span ng-model="showHide" ng-show="showHide" ng-click="toggleShowHide(showHide)">
+                        <i class="fa-solid fa-x"></i>
+                    </span>
+
+                    <p ng-hide="showHide">{{ event.title }}</p>
+                    <input type="text" ng-show="showHide" ng-model="event.title" value="{{ event.title }}">
+
+                    <p ng-hide="showHide">{{ event.local }}</p>
+                    <input type="text" ng-show="showHide" ng-model="event.local" value="{{ event.local }}">
+
+                    <p ng-hide="showHide">{{ event.dateStart | date:"dd/MM/yyyy - HH:mm" }}</p>
+                    <input type="datetime-local" ng-show="showHide" ng-model="event.dateStart"
+                        value="{{ event.dateStart }}">
+
+                    <button type="button" ng-model="showHide" ng-show="showHide" ng-click="updateEvent(event.id)"
+                        class="save-btn">
+                        Salvar
+                    </button>
+                </div>
+                <div class="event-wrapper-inner">
+                    <button ng-click="deleteEvent(event.id)" type="button" class="trash-btn">
+                        <span><i class="fa-regular fa-trash-can"></i></span>
+                    </button>
+                </div>
+            </div>
+            <p ng-if="eventList.length == 0" class="no-events">Nenhum evento cadastrado.</p>
+            <!-- {{ eventList }} -->
+            <!-- {{ eventList[0].title }} -->
+        </div>
     </div>
     <script src="./assets/js/main.js"></script>
 </body>
