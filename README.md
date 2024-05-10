@@ -128,7 +128,7 @@ DATABASE_URL="file:./dev.db"
 
 Create the schema for the database according to the .env file:
 ```
-npx prism migrate dev
+npx prisma migrate dev
 ```
 
 Run the project:
